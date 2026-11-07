@@ -50,7 +50,7 @@
 
 ## 下载
 
-前往 [Releases](https://github.com/<你的账号>/ts2mp4/releases) 下载 `TS转MP4.exe`，
+前往 [Releases](https://github.com/wlg521520/yuanfangshiren-/releases/) 下载 `TS转MP4.exe`，
 双击运行即可（Windows 10/11，64 位）。
 
 > exe 已内置 ffmpeg 7.1（含 libx264 / AAC），无需安装任何运行库。
