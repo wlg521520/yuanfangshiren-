@@ -1,0 +1,10 @@
+# 打包与运行依赖
+#
+# tkinter 是 Python 标准库自带，无需安装（Windows 官方安装包自带）。
+# 若提示缺少 tkinter，请重新运行 Python 安装程序并勾选 tcl/tk 组件。
+
+# 打包工具
+pyinstaller>=6.0
+
+# 界面拖拽支持（让文件/文件夹可直接拖入窗口）
+tkinterdnd2>=0.4.2

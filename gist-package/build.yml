@@ -1,0 +1,58 @@
+name: 构建与测试
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: 测试（Windows）
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 准备依赖（下载 ffmpeg）
+        shell: bash
+        run: bash scripts/setup.sh
+
+      - name: 运行测试
+        shell: bash
+        run: |
+          export TS2MP4_FFMPEG_DIR="$PWD/third_party/ffmpeg/bin"
+          for t in test_core test_merge test_robust test_flow test_mkv test_bulk; do
+            echo "===== $t ====="
+            .venv/Scripts/python.exe "src/$t.py"
+          done
+
+  build:
+    name: 打包 exe
+    runs-on: windows-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 准备依赖
+        shell: bash
+        run: bash scripts/setup.sh
+
+      - name: 打包
+        shell: bash
+        run: bash scripts/build.sh
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: TS转MP4-exe
+          path: dist/*.exe
